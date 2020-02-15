@@ -4,6 +4,7 @@
 
 
 //TODO: change library to Peter Fluery library
+//#include "lcd/lcd44780.h"
 #include "lcd/lcd44780.h"
 #include "uart/uart.h"
 
