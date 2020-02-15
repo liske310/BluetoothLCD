@@ -3,8 +3,6 @@
 #include <string.h>
 
 
-//TODO: change library to Peter Fluery library
-//#include "lcd/lcd44780.h"
 #include "lcd/lcd44780.h"
 #include "uart/uart.h"
 
@@ -30,7 +28,7 @@ int main(void)
 void print_message(char *str){
 	/*
 	 * TODO:
-	 * add 2 lines
+	 * add 2 lines support
 	 * if len > 16 but 1:line12:line2 then nothing :)
 	 * if len > 16 16 chars in 1 line other 16 in line 2
 	 */
