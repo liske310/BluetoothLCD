@@ -10,6 +10,7 @@
 
 void get_uart_message();
 void print_message(char *str);
+void mystrcpy(char * src,char * dst,uint8_t from,uint8_t to);
 
 int main(void)
 {
@@ -18,24 +19,40 @@ int main(void)
 	uart_init(UART_BAUD_SELECT(UART_BAUD_RATE,F_CPU));
 	sei();
 	lcd_cls();
-	lcd_locate(0,0);
 	lcd_str("Polacz sie");
 	while(1){
 		get_uart_message();
 	}
 }
 
+void mystrcpy(char * src,char * dst,uint8_t from,uint8_t to){
+	for(uint8_t i=0,j=0 ; to>=i ;i++ ){
+		if(src[i] == '\r'){
+			return;
+		}
+		if(from<=i){
+			dst[j]=src[i];
+			j++;
+		}
+	}
+}
+
 void print_message(char *str){
-	/*
-	 * TODO:
-	 * add 2 lines support
-	 * if len > 16 but 1:line12:line2 then nothing :)
-	 * if len > 16 16 chars in 1 line other 16 in line 2
-	 */
 	static char lcdbuffor[36];
-	strncpy(lcdbuffor,str,strlen(str)-2);
-	lcd_cls();
-	lcd_str(lcdbuffor);
+	if(strlen(str)-2>16){
+		strncpy(lcdbuffor,str,16);
+		lcd_cls();
+		lcd_str(lcdbuffor);
+		memset(lcdbuffor,0,36);
+		mystrcpy(str,lcdbuffor,16,32);
+		lcd_locate(1,0);
+		lcd_str(lcdbuffor);
+	}
+	else{
+		strncpy(lcdbuffor,str,strlen(str)-2);
+		lcd_cls();
+		lcd_str(lcdbuffor);
+	}
 	memset(lcdbuffor,0,36);
 }
 
